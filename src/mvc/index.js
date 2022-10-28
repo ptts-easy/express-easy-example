@@ -1,13 +1,17 @@
 const express = require('express');
-//const routes = require('./routes/index.route');
+const routes = require('./routes/index.route');
+var path = require('path');
 
 var app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, './views'));
+app.set('view engine', 'hbs');
 
-//app.use('/', routes);
+//app.get('/', (req, res) => {
+//  res.send("<h1>Hello MVC !!!</h1> <br> <a href='/'>Home</a>");
+//});
 
-app.get('/', (req, res) => {
-  res.send('Hello MVC!')
-});
+app.use('/', routes);
 
 module.exports = app;

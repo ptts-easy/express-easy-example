@@ -18,4 +18,4 @@ router.delete('/', (req, res) => {
   return res.send('DELETE HTTP method for Delete on restapi resource');
 });
 
-export default router;
+module.exports = router;

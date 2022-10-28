@@ -2,23 +2,21 @@
   "name": "express-easy-example",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js"
+    "start": "node ./bin/www"
   },
   "keywords": [],
   "author": "ptts",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1",
-    "formidable": "^2.0.1",
-    "mongodb": "^4.7.0",
-    "mysql": "^2.18.1",
-    "ws": "^8.8.0"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "dotenv": "^16.0.1",
-    "nodemon": "^2.0.19"
+    "dotenv": "^16.0.3"
   }
 }

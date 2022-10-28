@@ -1,30 +1,47 @@
-const express = require('express');
-const mvc = require('./mvc');
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
-//const tree = require('./tree');
-//const rest_routes = require('./restapi/index.route');
-const path = require('path')
-require("dotenv/config");
+const mvc = require('./mvc');
+const tree = require('./tree');
+const api_routes = require('./restapi/index.route');
 
 var app = express();
 
-app.use(express.static('public'))
-//app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+app.get('/hello', (req, res) => {
+  res.send('<h1> Hello World! </h1> <br> <a href="/">Home</a>');
 })
 
 app.use('/mvc', mvc);
-//app.use('/tree', tree);
-//app.use('/api', rest_routes);
+app.use('/tree', tree);
+app.use('/api', api_routes);
 
-const port = process.env.SERVER_PORT | 3000;
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-  
-//console.log("Server Listend : ", process.env.SERVER_PORT);
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-//app.listen(process.env.SERVER_PORT);
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
